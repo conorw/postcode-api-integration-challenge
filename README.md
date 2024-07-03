@@ -74,6 +74,9 @@ Errors are handled on the frontend. The user will be notified of any errors that
 
 This project uses vitest for testing. The tests are run using the command `pnpm test`. The tests are located in the tests folder.
 
+### Styling
+Mimimal styling was used for this project due to time constraints. Any styling was performed using component scoped CSS in the Svelte components.
+
 ### Hosting
 
 The app can be hosted on any platform that supports static web pages. For this example, the app is currently hosted on Vercel at https://postcode-api-integration-challenge.vercel.app/
