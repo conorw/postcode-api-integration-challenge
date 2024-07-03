@@ -60,7 +60,7 @@ To help with type safety and code readability, Typescript was used.
 
 ### Mapping Library
 
-The mapping library used is LeafletJS. This is a simple, open source library that is easy to use and has a large community. The library is also very lightweight and can be easily customized.
+An open source mapping library and open source layer will be used to display the geographical information. The library will be chosen based on ease of use and performance.
 
 ### Input Validation
 
