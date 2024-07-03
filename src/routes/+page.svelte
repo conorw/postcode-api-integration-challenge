@@ -2,6 +2,8 @@
   import { searchPostcode } from "$lib/postcodes";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
+  import Map from "$lib/map.svelte";
+  import { goto } from "$app/navigation";
 
   let postcodedata: any;
   let searchText: string = "";
@@ -21,6 +23,11 @@
       postcodedata = null;
       const data = await searchPostcode(searchText);
       postcodedata = data;
+
+      const newUrl = new URL($page.url);
+      newUrl?.searchParams?.set("postcode", searchText);
+      goto(newUrl);
+
     } catch (error: any) {
       errorText = error.message;
     }
@@ -33,16 +40,14 @@
     type="text"
     id="search"
     bind:value={searchText}
-    placeholder="Search for postcode"
-  />
-  <button
-    on:click={search}
     on:keyup={(e) => {
       if (e.key === "Enter") search();
-    }}>Search</button
-  >
+    }}
+    placeholder="Search for postcode"
+  />
+  <button on:click={search}>Search</button>
   {#if errorText}
-    <p>{errorText}</p>
+    <p class="error-text">{errorText}</p>
   {/if}
 
   {#if postcodedata}
@@ -61,7 +66,10 @@
       </div>
       <div class="col">
         <h2>Map Information</h2>
-        
+        <Map
+          latitude={postcodedata?.latitude}
+          longitude={postcodedata?.longitude}
+        />
       </div>
     </div>
   {/if}
@@ -89,5 +97,8 @@
   }
   .col {
     flex: 1;
+  }
+  .error-text {
+    color: red;
   }
 </style>
