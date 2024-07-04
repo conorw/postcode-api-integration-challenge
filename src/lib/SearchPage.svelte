@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { validatePostcode } from "$lib/postcodes";
+  import { validatePostcode } from "./postcodes";
   import { onMount } from "svelte";
-  import Map from "$lib/Map.svelte";
+  import Map from "./Map.svelte";
   import { goto } from "$app/navigation";
 
   export let postcodedata: any;
