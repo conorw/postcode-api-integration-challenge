@@ -10,14 +10,13 @@
   import Feature from "ol/Feature";
   import OSM from "ol/source/OSM";
   import { fromLonLat } from "ol/proj";
-  import { onMount } from "svelte";
 
-  export let latitude: number = 51.5074; // Default latitude for London
-  export let longitude: number = 0.1278; // Default longitude for London
+  let { latitude = 51.5074, longitude = 0.1278 } = $props();
 
   let map: Map;
 
   function initializeMap() {
+    console.log("Initializing map", longitude, latitude);
     const initialPosition = fromLonLat([longitude, latitude]);
     const marker = new Feature({
       geometry: new Point(initialPosition),
@@ -51,10 +50,12 @@
     });
   }
 
-  // Update map center and marker position when latitude or longitude changes
-  $: latitude, longitude, updateMapCenterAndMarker(latitude, longitude);
+  $effect(initializeMap);
+  $effect(() => updateMapCenterAndMarker(latitude, longitude));
+  $inspect(latitude, longitude);
 
   function updateMapCenterAndMarker(lat: number, long: number) {
+    console.log("Updating map center and marker position");
     if (map) {
       const position = fromLonLat([long, lat]);
       map.getView().setCenter(position);
@@ -68,8 +69,6 @@
         .setCoordinates(position);
     }
   }
-
-  onMount(initializeMap);
 </script>
 
 <div id="map" style="width: 100%; height: 400px;"></div>
